@@ -99,6 +99,11 @@ class RestRoute implements IRouter {
     }
     $presenterName = ucfirst(array_pop($frags));
 
+    // Try to redirect POST with id to update action
+    if($params['action'] == 'create' && array_key_exists("id",$params) ){
+      $params['action'] = 'update';
+    }
+
     // Allow to use URLs like domain.tld/presenter.format.
     $formats = join('|', array_keys($this->formats));
     if (Strings::match($presenterName, "/.+\.({$formats})$/")) {
